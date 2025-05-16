@@ -8,6 +8,9 @@ function generateGrid(numberInput) {
         square.classList.add("square");
         square.style.width = `calc(100%/${numberInput})`;
         square.style.height = `calc(100%/${numberInput})`;
+        square.addEventListener("mouseenter", () => {
+            square.style.backgroundColor = "white";
+        })
         grid.appendChild(square);
     }
 }
@@ -22,7 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
 })
 generateBtn.addEventListener("click", () => {
     removeGrid();
-    const userResponse = prompt("How many squares do you want on one side of the grid?", "16");
+    const userResponse = prompt("From 1-100, how detailed do your want your drawing? (1 being the least and 100 the most)", "16");
     console.log(userResponse);
     if (userResponse < 1 || userResponse > 100) {
         alert(`Entry is invalid. 
@@ -39,3 +42,5 @@ function resetGrid () {
 
 const reset = document.querySelector("#reset");
 reset.addEventListener("click", resetGrid);
+
+
