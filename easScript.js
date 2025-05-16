@@ -12,19 +12,30 @@ function generateGrid(numberInput) {
     }
 }
 
+function removeGrid () {
+    const squares = document.querySelectorAll(".square");
+    squares.forEach(square => square.remove());
+}
+
 document.addEventListener("DOMContentLoaded", () => {
     generateGrid(16);
 })
 generateBtn.addEventListener("click", () => {
-    const squares = document.querySelectorAll(".square");
-    squares.forEach(square => square.remove());
-
+    removeGrid();
     const userResponse = prompt("How many squares do you want on one side of the grid?", "16");
     console.log(userResponse);
-    if (userResponse => 1 && userResponse <= 100) {
-        generateGrid(userResponse);
-    } else {
+    if (userResponse < 1 || userResponse > 100) {
         alert(`Entry is invalid. 
 Please enter a number between 1 and 100.`)
+    } else {
+        generateGrid(userResponse);
     }
 });
+
+function resetGrid () {
+    removeGrid();
+    generateGrid(16);
+}
+
+const reset = document.querySelector("#reset");
+reset.addEventListener("click", resetGrid);
