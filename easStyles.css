@@ -9,7 +9,8 @@ body {
 .header {
     text-align: center;
     padding: 10px;
-    background-color: #7f7f7f;
+    background-color: bisque;
+
 }
 
 .content {
@@ -23,6 +24,10 @@ body {
 button {
     padding: 10px;
     margin: 10px;
+    color: wheat;
+    font-weight: bold;
+    background-color: #73a950;
+    border-radius: 15px;
 }
 
 .option-buttons {

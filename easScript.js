@@ -1,5 +1,12 @@
 const grid = document.querySelector(".grid");
 const generateBtn = document.querySelector("#generate");
+const colorBtn = document.querySelector("#color-btn");
+const randomBtn = document.querySelector("#random-btn");
+const hueBtn = document.querySelector("#hue-btn");
+const colorChoice = document.querySelector("#colorChoice");
+const squareClass = document.querySelectorAll(".square");
+
+let isRandomMode = false;
 
 //Default
 document.addEventListener("DOMContentLoaded", () => {
@@ -14,17 +21,23 @@ function generateGrid(numberInput) {
         square.style.width = `calc(100%/${numberInput})`;
         square.style.height = `calc(100%/${numberInput})`;
         square.addEventListener("mouseenter", () => {
-            square.style.backgroundColor = `${colorChoice.value}`;
+            if (isRandomMode) {
+                square.style.backgroundColor = randomColor();
+            } else {
+                square.style.backgroundColor = `${colorChoice.value}`;
+            }
         })
+
         grid.appendChild(square);
     }
 }
 
-function removeGrid () {
+function removeGrid() {
     const squares = document.querySelectorAll(".square");
     squares.forEach(square => square.remove());
 }
 
+// User setup
 generateBtn.addEventListener("click", () => {
     removeGrid();
     const userResponse = prompt("From 1-100, how detailed do your want your drawing? (1 being the least and 100 the most)", "16");
@@ -38,7 +51,7 @@ Please enter a number between 1 and 100.`)
 });
 
 //Reset Grid
-function resetGrid () {
+function resetGrid() {
     removeGrid();
     generateGrid(16);
 }
@@ -46,11 +59,24 @@ function resetGrid () {
 const reset = document.querySelector("#reset");
 reset.addEventListener("click", resetGrid);
 
-//option buttons
+function randomColor() {
+    const letters = "0123456789ABCDEF";
+    let color = "#";
+    for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+}
 
-const colorBtn = document.querySelector("#color-btn");
-const randomBtn = document.querySelector("#random-btn");
-const hueBtn = document.querySelector("#hue-btn");
-const colorChoice = document.querySelector("#colorChoice");
-const squareClass = document.querySelectorAll(".square");
+function applyRandomColor(square) {
+    square.style.backgroundColor = randomColor();
+}
 
+// randomBtn.addEventListener("click", () => applyRandomColor(square))
+randomBtn.addEventListener("click", () => {
+    isRandomMode = true;
+})
+
+colorChoice.addEventListener("input", () => {
+    isRandomMode = false;
+})
