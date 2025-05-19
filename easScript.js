@@ -1,12 +1,11 @@
 const grid = document.querySelector(".grid");
 const generateBtn = document.querySelector("#generate");
-const colorBtn = document.querySelector("#color-btn");
 const randomBtn = document.querySelector("#random-btn");
-const hueBtn = document.querySelector("#hue-btn");
+const hueBtn = document.querySelector("#hue-toggle-btn");
 const colorChoice = document.querySelector("#colorChoice");
-const squareClass = document.querySelectorAll(".square");
-
 let isRandomMode = false;
+let isHueOn = false;
+let hueDirectionTracker = new Map()
 
 //Default
 document.addEventListener("DOMContentLoaded", () => {
@@ -18,13 +17,35 @@ function generateGrid(numberInput) {
     for (let i = 0; i < numberInput * numberInput; i++) {
         const square = document.createElement("div");
         square.classList.add("square");
+        square.id = `square - ${i}`;
         square.style.width = `calc(100%/${numberInput})`;
         square.style.height = `calc(100%/${numberInput})`;
+        square.style.opacity = "1"
+        hueDirectionTracker.set(square.id, false)
+
         square.addEventListener("mouseenter", () => {
             if (isRandomMode) {
                 square.style.backgroundColor = randomColor();
             } else {
-                square.style.backgroundColor = `${colorChoice.value}`;
+                square.style.backgroundColor = `${colorChoice.value}`
+            }
+
+            let opacityLevel = Number(square.style.opacity) ;
+            if (isHueOn) {
+                if (hueDirectionTracker.get(square.id) === true) { // going up in hue
+                    opacityLevel += 0.1;
+                    if (opacityLevel >= 1.0) {
+                        opacityLevel = 1.0;
+                        hueDirectionTracker.set(square.id, false)
+                    }
+                } else {
+                    opacityLevel -= 0.1;
+                    if (opacityLevel <= 0.1) {
+                        opacityLevel = 0.1;
+                        hueDirectionTracker.set(square.id, true)
+                    }
+                }
+                square.style.opacity = opacityLevel.toString();
             }
         })
 
@@ -50,7 +71,6 @@ Please enter a number between 1 and 100.`)
     }
 });
 
-//Reset Grid
 function resetGrid() {
     removeGrid();
     generateGrid(16);
@@ -68,15 +88,24 @@ function randomColor() {
     return color;
 }
 
-function applyRandomColor(square) {
-    square.style.backgroundColor = randomColor();
-}
-
-// randomBtn.addEventListener("click", () => applyRandomColor(square))
 randomBtn.addEventListener("click", () => {
     isRandomMode = true;
 })
 
 colorChoice.addEventListener("input", () => {
     isRandomMode = false;
+})
+
+hueBtn.addEventListener("click", () => {
+    hueBtn.classList.toggle("on-mode");
+    hueBtn.classList.toggle("off-mode");
+
+    if (hueBtn.classList.contains("on-mode")) {
+        hueBtn.textContent = "Hue off";
+        isHueOn = true;
+    } else {
+        hueBtn.textContent = "Add Hue";
+        isHueOn = false;
+    }
+
 })

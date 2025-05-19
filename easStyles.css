@@ -9,7 +9,9 @@ body {
 .header {
     text-align: center;
     padding: 10px;
-    background-color: bisque;
+    background-image: linear-gradient(to bottom right, pink, purple);
+    color: wheat;
+    font-size: 22px;
 
 }
 
@@ -18,7 +20,6 @@ body {
     justify-content: center;
     width: 100%;
     height: 100%;
-    border: 2px solid blue;
 }
 
 button {
@@ -38,28 +39,26 @@ button {
     flex-direction: column;
     justify-content: flex-start;
 
-    border: 2px solid red;
+
     box-sizing: border-box;
     width: 20vw;
     padding: 5px;
 }
 
 .gridContainer {
-    border: 2px solid yellow;
     box-sizing: border-box;
     width: 80vw;
     height: 80vw;
     padding: 20px;
     align-self: stretch;
-
 }
 
 .grid-container p {
     text-align: center;
+    color: darkolivegreen;
 }
 
 .grid {
-    border: 2px solid green;
     box-sizing: border-box;
     padding: 20px;
     width:500px;
@@ -77,3 +76,12 @@ button {
     box-sizing: border-box;
 }
 
+#hue-toggle-btn.on-mode {
+    background-color: darkslategrey;
+    color: goldenrod;
+}
+
+#hue-toggle-btn.off-mode {
+    background-color: #73a950;
+    color: wheat;
+}
